@@ -2,6 +2,7 @@ import { Buffer } from 'node:buffer';
 import { Worker } from 'node:worker_threads';
 import crypto from 'node:crypto';
 import path from 'node:path'
+import URL from 'node:url'
 
 let create = algorithm => async (buffer, { outputFormat = 'hex' } = {}) => {
 	const hash = crypto.createHash(algorithm);
@@ -15,7 +16,8 @@ let create = algorithm => async (buffer, { outputFormat = 'hex' } = {}) => {
 };
 
 if (Worker !== undefined) {
-	const threadFilePath = path.resolve('thread.js') // new URL('thread.js', import.meta.url);
+	const ext = path.extname(globalThis?.__filename || URL.fileURLToPath(import.meta.url))
+	const threadFilePath = URL.pathToFileURL(path.resolve('thread' + ext)) // new URL('thread.js', import.meta.url);
 	let worker; // Lazy
 	let taskIdCounter = 0;
 	const tasks = new Map();

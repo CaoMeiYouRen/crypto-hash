@@ -14,20 +14,23 @@
 	"exports": {
 		"types": "./index.d.ts",
 		"node": "./index.js",
-		"default": "./browser.js"
+		"default": "./browser.js",
+		"require": "./dist/index.cjs"
 	},
 	"engines": {
 		"node": ">=18"
 	},
 	"scripts": {
 		"//test": "xo && ava test.js && karmatic test-browser.js && tsd",
-		"test": "xo && ava test.js && tsd"
+		"test": "xo && ava test.js && tsd",
+		"build": "tsup"
 	},
 	"files": [
 		"index.js",
 		"index.d.ts",
 		"browser.js",
-		"thread.js"
+		"thread.js",
+		"dist"
 	],
 	"keywords": [
 		"crypto",
@@ -47,6 +50,8 @@
 		"ava": "^5.3.1",
 		"hash.js": "^1.1.7",
 		"tsd": "^0.29.0",
+		"tsup": "^8.0.2",
+		"typescript": "^5.4.3",
 		"xo": "^0.56.0"
 	}
 }
