@@ -50,7 +50,7 @@ var create = (algorithm) => async (buffer, { outputFormat = "hex" } = {}) => {
   return hash.digest().buffer;
 };
 if (import_node_worker_threads.Worker !== void 0) {
-  const ext = import_node_path.default.extname((globalThis == null ? void 0 : globalThis.__filename) || import_node_url.default.fileURLToPath(import_meta.url));
+  const ext = import_node_path.default.extname(typeof __filename === "string" && __filename || import_node_url.default.fileURLToPath(import_meta.url));
   const threadFilePath = import_node_url.default.pathToFileURL(import_node_path.default.resolve("thread" + ext));
   let worker;
   let taskIdCounter = 0;
