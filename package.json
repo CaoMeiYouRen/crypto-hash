@@ -13,9 +13,9 @@
 	"type": "module",
 	"exports": {
 		"types": "./index.d.ts",
-		"node": "./index.js",
-		"default": "./browser.js",
-		"require": "./dist/index.cjs"
+		"import": "./index.js",
+		"require": "./dist/index.cjs",
+		"default": "./browser.js"
 	},
 	"engines": {
 		"node": ">=18"
