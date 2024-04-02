@@ -1,8 +1,9 @@
-import {Buffer} from 'node:buffer';
-import {Worker} from 'node:worker_threads';
+import { Buffer } from 'node:buffer';
+import { Worker } from 'node:worker_threads';
 import crypto from 'node:crypto';
+import path from 'node:path'
 
-let create = algorithm => async (buffer, {outputFormat = 'hex'} = {}) => {
+let create = algorithm => async (buffer, { outputFormat = 'hex' } = {}) => {
 	const hash = crypto.createHash(algorithm);
 	hash.update(buffer, typeof buffer === 'string' ? 'utf8' : undefined);
 
@@ -14,8 +15,7 @@ let create = algorithm => async (buffer, {outputFormat = 'hex'} = {}) => {
 };
 
 if (Worker !== undefined) {
-	const threadFilePath = new URL('thread.js', import.meta.url);
-
+	const threadFilePath = path.resolve('thread.js') // new URL('thread.js', import.meta.url);
 	let worker; // Lazy
 	let taskIdCounter = 0;
 	const tasks = new Map();
@@ -48,10 +48,10 @@ if (Worker !== undefined) {
 		}
 
 		worker.ref();
-		worker.postMessage({id, value}, transferList);
+		worker.postMessage({ id, value }, transferList);
 	});
 
-	create = algorithm => async (source, {outputFormat = 'hex'} = {}) => {
+	create = algorithm => async (source, { outputFormat = 'hex' } = {}) => {
 		let buffer;
 		if (typeof source === 'string') {
 			// Saving one copy operation by writing string to buffer right away and then transfering buffer
@@ -64,7 +64,7 @@ if (Worker !== undefined) {
 			buffer = finalSource.buffer.slice(0); // eslint-disable-line unicorn/prefer-spread
 		}
 
-		const result = await taskWorker({algorithm, buffer}, [buffer]);
+		const result = await taskWorker({ algorithm, buffer }, [buffer]);
 		if (outputFormat === 'hex') {
 			return Buffer.from(result).toString('hex');
 		}
