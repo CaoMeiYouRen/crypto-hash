@@ -16,7 +16,7 @@ let create = algorithm => async (buffer, { outputFormat = 'hex' } = {}) => {
 };
 
 if (Worker !== undefined) {
-	const ext = path.extname((typeof __filename === 'string' && __filename) || URL.fileURLToPath(import.meta.url))
+	const ext = path.extname(URL.fileURLToPath(import.meta.url))
 	const threadFilePath = URL.pathToFileURL(path.resolve('thread' + ext)) // new URL('thread.js', import.meta.url);
 	let worker; // Lazy
 	let taskIdCounter = 0;

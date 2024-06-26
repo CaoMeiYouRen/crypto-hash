@@ -35,12 +35,17 @@ __export(crypto_hash_exports, {
   sha512: () => sha512
 });
 module.exports = __toCommonJS(crypto_hash_exports);
+
+// node_modules/.pnpm/tsup@8.0.2_typescript@5.4.3/node_modules/tsup/assets/cjs_shims.js
+var getImportMetaUrl = () => typeof document === "undefined" ? new URL("file:" + __filename).href : document.currentScript && document.currentScript.src || new URL("main.js", document.baseURI).href;
+var importMetaUrl = /* @__PURE__ */ getImportMetaUrl();
+
+// index.js
 var import_node_buffer = require("buffer");
 var import_node_worker_threads = require("worker_threads");
 var import_node_crypto = __toESM(require("crypto"), 1);
 var import_node_path = __toESM(require("path"), 1);
 var import_node_url = __toESM(require("url"), 1);
-var import_meta = {};
 var create = (algorithm) => async (buffer, { outputFormat = "hex" } = {}) => {
   const hash = import_node_crypto.default.createHash(algorithm);
   hash.update(buffer, typeof buffer === "string" ? "utf8" : void 0);
@@ -50,7 +55,7 @@ var create = (algorithm) => async (buffer, { outputFormat = "hex" } = {}) => {
   return hash.digest().buffer;
 };
 if (import_node_worker_threads.Worker !== void 0) {
-  const ext = import_node_path.default.extname(typeof __filename === "string" && __filename || import_node_url.default.fileURLToPath(import_meta.url));
+  const ext = import_node_path.default.extname(import_node_url.default.fileURLToPath(importMetaUrl));
   const threadFilePath = import_node_url.default.pathToFileURL(import_node_path.default.resolve("thread" + ext));
   let worker;
   let taskIdCounter = 0;
